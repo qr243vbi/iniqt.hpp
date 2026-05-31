@@ -1,4 +1,4 @@
-# inipp-qt
+# iniqt.hpp
 
 A lightweight, header-only, type-safe INI parser and generation library written entirely in modern C++ and optimized specifically for the **Qt framework**. 
 
@@ -22,12 +22,12 @@ This repository is a port of the original standard-library-dependent `inipp` lib
 ### 1. Simple Load, Modify, and Save Pipeline
 
 ```cpp
-#include "inipp.hpp"
+#include "iniqt.hpp"
 #include <QFile>
 #include <QDebug>
 
 void manageConfigurations() {
-    inipp::Ini ini;
+    iniqt::Ini ini;
 
     // --- 1. Parse an Existing INI File ---
     QFile inputFile("config.ini");
@@ -48,17 +48,17 @@ void manageConfigurations() {
     int port = 8080; // default value if missing
     bool useProxy = false;
 
-    if (inipp::get_value(networkSec, "Host", host)) {
+    if (iniqt::get_value(networkSec, "Host", host)) {
         qDebug() << "Loaded Host:" << host;
     }
-    inipp::get_value(networkSec, "Port", port);       // Deduce 'int' automatically
-    inipp::get_value(networkSec, "UseProxy", useProxy); // Handles "true", "yes", "1"
+    iniqt::get_value(networkSec, "Port", port);       // Deduce 'int' automatically
+    iniqt::get_value(networkSec, "UseProxy", useProxy); // Handles "true", "yes", "1"
 
     // --- 3. Mutate / Add Values (set_value) ---
     auto &updaterSec = ini.sections["Updater"];
-    inipp::set_value(updaterSec, "CheckInterval", 7);        // Saves as "7"
-    inipp::set_value(updaterSec, "AutoDownload", true);     // Saves as "true"
-    inipp::set_value(updaterSec, "MirrorURL", "https://example.com");
+    iniqt::set_value(updaterSec, "CheckInterval", 7);        // Saves as "7"
+    iniqt::set_value(updaterSec, "AutoDownload", true);     // Saves as "true"
+    iniqt::set_value(updaterSec, "MirrorURL", "https://example.com");
 
     // --- 4. Serialize Modifications Back to Disk ---
     QFile outputFile("config_modified.ini");
@@ -93,8 +93,8 @@ You can customize the characters utilized for headers, assignments, comments, an
 
 ```cpp
 // Create an INI format that interprets '#' as comments and ':' for assignments
-auto customFormat = QSharedPointer<inipp::Format>::create('[', ']', ':', '#', '\$', '{', ':', '}');
-inipp::Ini ini(customFormat);
+auto customFormat = QSharedPointer<iniqt::Format>::create('[', ']', ':', '#', '\$', '{', ':', '}');
+iniqt::Ini ini(customFormat);
 ```
 
 ## 📄 License
