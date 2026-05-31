@@ -8,7 +8,7 @@
 #include <QVariant>
 #include <type_traits>
 
-namespace inipp {
+namespace iniqt {
 
 namespace detail {
 
